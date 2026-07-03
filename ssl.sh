@@ -278,12 +278,12 @@ apply_cert() {
             fi
             
             msg_info "正在申请证书，请稍候..."
-            $ACME_SH --issue -d "$domain" --standalone -k ec-256 --server letsencrypt --pre-hook "/usr/local/bin/zs cron-pre" --post-hook "/usr/local/bin/zs cron-post"
+            $ACME_SH --issue -d "$domain" --standalone -k ec-256 --server letsencrypt --pre-hook "/usr/local/bin/ssl cron-pre" --post-hook "/usr/local/bin/ssl cron-post"
             local issue_status=$?
             
             if [ $issue_status -ne 0 ]; then
                 msg_warn "申请未成功，正在自动添加 --force 参数强制重新申请..."
-                $ACME_SH --issue -d "$domain" --standalone -k ec-256 --server letsencrypt --pre-hook "/usr/local/bin/zs cron-pre" --post-hook "/usr/local/bin/zs cron-post" --force
+                $ACME_SH --issue -d "$domain" --standalone -k ec-256 --server letsencrypt --pre-hook "/usr/local/bin/ssl cron-pre" --post-hook "/usr/local/bin/ssl cron-post" --force
                 issue_status=$?
             fi
             
